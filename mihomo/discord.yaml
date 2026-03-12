@@ -1,0 +1,35 @@
+payload:
+  # ==========================================
+  # Discord
+  # ==========================================
+  - PROCESS-NAME,Discord.exe                   # Windows (Stable)
+  - PROCESS-NAME,discord                       # Linux (Stable)
+  - PROCESS-NAME,DiscordPTB.exe                # Windows (PTB / Beta)
+  - PROCESS-NAME,discord-ptb                   # Linux (PTB)
+  - PROCESS-NAME,DiscordCanary.exe             # Windows (Canary)
+  - PROCESS-NAME,discord-canary                # Linux (Canary)
+
+  # ==========================================
+  # Vesktop
+  # ==========================================
+  - PROCESS-NAME,vesktop.exe                   # Windows
+  - PROCESS-NAME,vesktop                       # Linux
+  - PROCESS-NAME,vesktop-bin                   # Linux (alt)
+
+  # ==========================================
+  # Legcord
+  # ==========================================
+  - PROCESS-NAME,Legcord.exe                   # Windows
+  - PROCESS-NAME,legcord                       # Linux
+
+  # ==========================================
+  # WebCord
+  # ==========================================
+  - PROCESS-NAME,WebCord.exe                   # Windows
+  - PROCESS-NAME,webcord                       # Linux
+
+  # ==========================================
+  # Equicord
+  # ==========================================
+  - PROCESS-NAME,Equicord.exe                  # Windows
+  - PROCESS-NAME,equicord                      # Linux
