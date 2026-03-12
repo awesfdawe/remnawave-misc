@@ -36,14 +36,6 @@ rule-providers:
       - fc00::/7
       - fe80::/10
       - ff00::/8
-  browsers:
-    type: http
-    behavior: classical
-    format: yaml
-    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/browsers.yaml
-    path: ./rule-sets/browsers.yaml
-    interval: 86400
-    proxy: 🎲 Прочие
   ru-ips:
     type: http
     behavior: ipcidr
@@ -86,7 +78,7 @@ rule-providers:
     proxy: 🎲 Прочие
   telegram-ips:
     type: http
-    behavior: domain
+    behavior: ipcidr
     format: mrs
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs
     path: ./rule-sets/telegram-ips.mrs
@@ -122,6 +114,14 @@ rule-providers:
     format: yaml
     url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/roblox.yaml
     path: ./rule-sets/roblox-clients.yaml
+    interval: 86400
+    proxy: 🎲 Прочие
+  browsers:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/browsers.yaml
+    path: ./rule-sets/browsers.yaml
     interval: 86400
     proxy: 🎲 Прочие
 
@@ -181,8 +181,6 @@ dns:
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
-  fake-ip-filter:
-    - rule-set:private-ips
   default-nameserver:
     - https://77.88.8.8/dns-query
     - https://8.8.8.8/dns-query
