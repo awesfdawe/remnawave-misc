@@ -2,12 +2,8 @@ payload:
   # ==========================================
   # Discord
   # ==========================================
-  - PROCESS-NAME,Discord.exe                   # Windows (Stable)
-  - PROCESS-NAME,discord                       # Linux (Stable)
-  - PROCESS-NAME,DiscordPTB.exe                # Windows (PTB / Beta)
-  - PROCESS-NAME,discord-ptb                   # Linux (PTB)
-  - PROCESS-NAME,DiscordCanary.exe             # Windows (Canary)
-  - PROCESS-NAME,discord-canary                # Linux (Canary)
+  - PROCESS-NAME,Discord.exe                   # Windows
+  - PROCESS-NAME,discord                       # Linux
 
   # ==========================================
   # Vesktop

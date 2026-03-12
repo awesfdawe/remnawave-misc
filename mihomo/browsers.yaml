@@ -4,9 +4,6 @@ payload:
   # ==========================================
   - PROCESS-NAME,chrome.exe                    # Windows
   - PROCESS-NAME,chrome                        # Linux
-  # Beta / Dev / Canary
-  - PROCESS-NAME,google-chrome-beta            # Linux
-  - PROCESS-NAME,google-chrome-unstable        # Linux
 
   # ==========================================
   # Chromium
@@ -20,19 +17,13 @@ payload:
   # ==========================================
   - PROCESS-NAME,firefox.exe                   # Windows
   - PROCESS-NAME,firefox                       # Linux
-  - PROCESS-NAME,firefox-bin                   # Linux
-  # Beta / Dev Edition / Nightly
-  - PROCESS-NAME,firefox-developer-edition     # Linux
-  - PROCESS-NAME,firefox-nightly               # Linux
+  - PROCESS-NAME,firefox-bin                   # Linux (alt)
 
   # ==========================================
   # Microsoft Edge
   # ==========================================
   - PROCESS-NAME,msedge.exe                    # Windows
   - PROCESS-NAME,msedge                        # Linux
-  # Beta / Dev
-  - PROCESS-NAME,microsoft-edge-beta           # Linux
-  - PROCESS-NAME,microsoft-edge-dev            # Linux
 
   # ==========================================
   # Opera
