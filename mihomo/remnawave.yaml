@@ -1,0 +1,245 @@
+rules:
+  - RULE-SET,private-ips,DIRECT,no-resolve
+
+  - RULE-SET,ru-ips,DIRECT
+  - RULE-SET,ru-domains,DIRECT
+  - RULE-SET,ru-whitelist-domains,DIRECT
+
+  - RULE-SET,faceit-domains,DIRECT
+
+  - RULE-SET,youtube-domains,📺 Youtube
+
+  - RULE-SET,telegram-ips,💬 Мессенджеры
+  - RULE-SET,discord-domains,💬 Мессенджеры
+  - RULE-SET,discord-clients,💬 Мессенджеры
+
+  - RULE-SET,roblox-domains,🎮 Игры
+  - RULE-SET,roblox-clients,🎮 Игры
+
+  - RULE-SET,browsers,🎲 Прочие
+
+  - MATCH,DIRECT
+
+rule-providers:
+  private-ips:
+    type: inline
+    behavior: ipcidr
+    payload:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+      - 100.64.0.0/10
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 224.0.0.0/3
+      - ::1/128
+      - fc00::/7
+      - fe80::/10
+      - ff00::/8
+  browsers:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/browsers.yaml
+    path: ./rule-sets/browsers.yaml
+    interval: 86400
+    proxy: 🎲 Прочие
+  ru-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/refs/heads/master/release/mihomo/direct.mrs
+    path: ./rule-sets/ru-ips.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  ru-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/hydraponique/roscomvpn-geosite/refs/heads/master/release/mihomo/category-ru.mrs
+    path: ./rule-sets/ru-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  ru-whitelist-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/hydraponique/roscomvpn-geosite/refs/heads/master/release/mihomo/whitelist.mrs
+    path: ./rule-sets/ru-whitelist-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  faceit-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/hydraponique/roscomvpn-geosite/refs/heads/master/release/mihomo/faceit.mrs
+    path: ./rule-sets/faceit-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  youtube-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs
+    path: ./rule-sets/youtube-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  telegram-ips:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs
+    path: ./rule-sets/telegram-ips.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  discord-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/discord.mrs
+    path: ./rule-sets/discord-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  discord-clients:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/discord.yaml
+    path: ./rule-sets/discord-clients.yaml
+    interval: 86400
+    proxy: 🎲 Прочие
+  roblox-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/roblox.mrs
+    path: ./rule-sets/roblox-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  roblox-clients:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/roblox.yaml
+    path: ./rule-sets/roblox-clients.yaml
+    interval: 86400
+    proxy: 🎲 Прочие
+
+proxies: # Не убирать! Сюда remnawave добавит хосты
+proxy-groups:
+  - name: ⚡️ Пинг
+    type: url-test
+    tolerance: 50
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    timeout: 3000
+    lazy: true
+    expected-status: 204
+    proxies:
+      # Remnawave добавит хосты
+    hidden: true
+
+  - name: 📺 Youtube
+    icon: https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/youtube.svg
+    type: select
+    proxies:
+      # Remnawave добавит хосты
+
+  - name: 💬 Мессенджеры
+    icon: https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/message-circle.svg
+    type: select
+    proxies:
+      - ⚡️ Пинг
+      # Remnawave добавит хосты
+
+  - name: 🎮 Игры
+    icon: https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/gamepad-2.svg
+    type: select
+    proxies:
+      - ⚡️ Пинг
+      # Remnawave добавит хосты
+  
+  - name: 🎲 Прочие
+    icon: https://cdn.jsdelivr.net/gh/lucide-icons/lucide@main/icons/dices.svg
+    type: select
+    proxies:
+      # Remnawave добавит хосты
+
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+dns:
+  enable: true
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - rule-set:private-ips
+  default-nameserver:
+    - https://77.88.8.8/dns-query
+    - https://8.8.8.8/dns-query
+  proxy-server-nameserver:
+    - https://77.88.8.8/dns-query
+    - https://8.8.8.8/dns-query
+  direct-nameserver:
+    - https://77.88.8.8/dns-query
+    - https://8.8.8.8/dns-query
+  nameserver:
+    - https://8.8.8.8/dns-query#⚡️ Пинг
+
+tun:
+  enable: true
+  stack: system
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+  strict-route: true
+  route-exclude-address:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 224.0.0.0/3
+    - ::1/128
+    - fc00::/7
+    - fe80::/10
+    - ff00::/8
+
+sniffer:
+  enable: true
+  override-destination: false
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+    TLS:
+      ports:
+        - 443
+    QUIC:
+      ports:
+        - 443
+  
+  skip-dst-address:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 224.0.0.0/3
+    - ::1/128
+    - fc00::/7
+    - fe80::/10
+    - ff00::/8
