@@ -1,5 +1,6 @@
 rules:
   - RULE-SET,private-ips,DIRECT,no-resolve
+  - RULE-SET,private-domains,DIRECT
 
   - RULE-SET,ru-ips,DIRECT
   - RULE-SET,ru-domains,DIRECT
@@ -36,6 +37,14 @@ rule-providers:
       - fc00::/7
       - fe80::/10
       - ff00::/8
+  private-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs
+    path: ./rule-sets/private-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
   ru-ips:
     type: http
     behavior: ipcidr
@@ -181,6 +190,8 @@ dns:
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - rule-set:private-domains
   default-nameserver:
     - https://77.88.8.8/dns-query
     - https://8.8.8.8/dns-query
