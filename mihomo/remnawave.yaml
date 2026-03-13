@@ -8,6 +8,8 @@ rules:
 
   - RULE-SET,faceit-domains,DIRECT
 
+  - AND,((NETWORK,udp),(DST-PORT,443)),REJECT
+
   - RULE-SET,youtube-domains,📺 Youtube
 
   - RULE-SET,telegram-ips,💬 Мессенджеры
@@ -234,9 +236,6 @@ sniffer:
       ports:
         - 80
     TLS:
-      ports:
-        - 443
-    QUIC:
       ports:
         - 443
   
