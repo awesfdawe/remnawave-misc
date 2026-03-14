@@ -18,9 +18,9 @@ jobs:
       - name: Setup mihomo
         run: |
           wget -O mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.19.21/mihomo-linux-amd64-compatible-v1.19.21.gz
-          gunzip mihomo.gz
-          chmod +x mihomo
-          sudo mv mihomo /usr/local/bin/
+          gunzip -c mihomo.gz > mihomo-bin
+          chmod +x mihomo-bin
+          sudo mv mihomo-bin /usr/local/bin/mihomo
 
       - name: Build Rulesets
         run: |
