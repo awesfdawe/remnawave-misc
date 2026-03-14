@@ -20,6 +20,7 @@ rules:
   - RULE-SET,roblox-clients,🎮 Игры
 
   - RULE-SET,browsers,🎲 Прочие
+  - RULE-SET,vscode,🎲 Прочие
 
   - MATCH,DIRECT
 
@@ -133,6 +134,14 @@ rule-providers:
     format: yaml
     url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/browsers.yaml
     path: ./rule-sets/browsers.yaml
+    interval: 86400
+    proxy: 🎲 Прочие
+  vscode:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/vscode.yaml
+    path: ./rule-sets/vscode.yaml
     interval: 86400
     proxy: 🎲 Прочие
 
