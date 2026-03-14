@@ -1,0 +1,91 @@
+name: Build Mihomo Rulesets
+
+on:
+  schedule:
+    - cron: '0 3 * * 0' # 03:00 UTC on Sundays
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push to the release branch
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup mihomo
+        run: |
+          wget -O mihomo.gz https://github.com/MetaCubeX/mihomo/releases/download/v1.19.21/mihomo-linux-amd64-compatible-v1.19.21.gz
+          gunzip mihomo.gz
+          chmod +x mihomo
+          sudo mv mihomo /usr/local/bin/
+
+      - name: Build Rulesets
+        run: |
+          mkdir -p output_mrs
+          
+          # Iterate over directories in mihomo/sources
+          if [ -d "mihomo/sources" ]; then
+            for dir in mihomo/sources/*/; do
+              # Ensure it's a directory
+              [ -d "$dir" ] || continue
+              
+              dirname=$(basename "$dir")
+              echo "Processing $dirname..."
+              
+              temp_list=$(mktemp)
+              
+              # Download lists
+              if [ -f "${dir}lists-to-download.txt" ]; then
+                while IFS= read -r url; do
+                  # Skip empty lines
+                  if [[ -z "$url" ]]; then
+                    continue
+                  fi
+                  echo "Downloading $url"
+                  curl -sSL "$url" >> "$temp_list"
+                  echo "" >> "$temp_list" # Add newline just in case
+                done < "${dir}lists-to-download.txt"
+              fi
+              
+              # Add local additions
+              if [ -f "${dir}addition.txt" ]; then
+                cat "${dir}addition.txt" >> "$temp_list"
+                echo "" >> "$temp_list"
+              fi
+              
+              # Process: remove carriage returns, empty lines, and sort unique
+              clean_list=$(mktemp)
+              cat "$temp_list" | tr -d '\r' | awk 'NF' | sort -u > "$clean_list"
+              
+              echo "Building ruleset for $dirname..."
+              mihomo convert-ruleset domain text "$clean_list" "output_mrs/${dirname}.mrs"
+              
+              rm "$temp_list" "$clean_list"
+            done
+          else
+            echo "Directory mihomo/sources does not exist."
+            exit 1
+          fi
+
+      - name: Push to release branch
+        run: |
+          cd output_mrs
+          git init
+          git checkout --orphan release
+          
+          # Add only the built .mrs files
+          git add *.mrs
+          
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Use Unix timestamp as commit message
+          TIMESTAMP=$(date +%s)
+          git commit -m "$TIMESTAMP"
+          
+          # Force push to release branch to overwrite history and save space
+          git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git release
