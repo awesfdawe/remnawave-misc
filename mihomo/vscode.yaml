@@ -12,6 +12,12 @@ payload:
   - PROCESS-NAME,antigravity                   # Linux
 
   # ==========================================
+  # Antigravity Tools
+  # ==========================================
+  - PROCESS-NAME,Antigravity Tools.exe         # Windows
+  - PROCESS-NAME,antigravity_tools             # Linux
+
+  # ==========================================
   # Visual Studio Code — Insiders
   # ==========================================
   - PROCESS-NAME,Code - Insiders.exe           # Windows
