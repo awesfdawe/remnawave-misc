@@ -164,6 +164,22 @@ rule-providers:
     interval: 86400
     proxy: 🎲 Прочие
 
+listeners:
+  - name: proxy-in
+    type: mixed
+    port: 1080
+    listen: 127.0.0.1
+    udp: true
+    users: []
+    proxy: 🎲 Прочие
+  - name: direct-in
+    type: mixed
+    port: 1081
+    listen: 127.0.0.1
+    udp: true
+    users: []
+    proxy: DIRECT
+
 proxies: # Не убирать! Сюда remnawave добавит хосты
 proxy-groups:
   - name: ⚡️ Пинг
