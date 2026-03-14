@@ -1,0 +1,36 @@
+payload:
+  # ==========================================
+  # Visual Studio Code
+  # ==========================================
+  - PROCESS-NAME,Code.exe                      # Windows
+  - PROCESS-NAME,code                          # Linux
+
+  # ==========================================
+  # Antigravity
+  # ==========================================
+  - PROCESS-NAME,Antigravity.exe               # Windows
+  - PROCESS-NAME,antigravity                   # Linux
+
+  # ==========================================
+  # Visual Studio Code — Insiders
+  # ==========================================
+  - PROCESS-NAME,Code - Insiders.exe           # Windows
+  - PROCESS-NAME,code-insiders                 # Linux
+
+  # ==========================================
+  # VSCodium
+  # ==========================================
+  - PROCESS-NAME,VSCodium.exe                  # Windows
+  - PROCESS-NAME,codium                        # Linux
+
+  # ==========================================
+  # Cursor
+  # ==========================================
+  - PROCESS-NAME,Cursor.exe                    # Windows
+  - PROCESS-NAME,cursor                        # Linux
+
+  # ==========================================
+  # Windsurf
+  # ==========================================
+  - PROCESS-NAME,Windsurf.exe                  # Windows
+  - PROCESS-NAME,windsurf                      # Linux
