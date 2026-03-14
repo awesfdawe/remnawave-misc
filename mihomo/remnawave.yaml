@@ -10,6 +10,9 @@ rules:
 
   - AND,((NETWORK,udp),(DST-PORT,443)),REJECT
 
+  - RULE-SET,direct-domains,DIRECT
+  - RULE-SET,in-proxy-domains,🎲 Прочие
+
   - RULE-SET,youtube-domains,📺 Youtube
 
   - RULE-SET,telegram-ips,💬 Мессенджеры
@@ -80,6 +83,22 @@ rule-providers:
     path: ./rule-sets/faceit-domains.mrs
     interval: 86400
     proxy: 🎲 Прочие
+  direct-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/release/direct.mrs
+    path: ./rule-sets/direct-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
+  in-proxy-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/release/in-proxy.mrs
+    path: ./rule-sets/in-proxy-domains.mrs
+    interval: 86400
+    proxy: 🎲 Прочие
   youtube-domains:
     type: http
     behavior: domain
@@ -108,7 +127,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/discord.yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/rule-sets/discord.yaml
     path: ./rule-sets/discord-clients.yaml
     interval: 86400
     proxy: 🎲 Прочие
@@ -124,7 +143,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/roblox.yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/rule-sets/roblox.yaml
     path: ./rule-sets/roblox-clients.yaml
     interval: 86400
     proxy: 🎲 Прочие
@@ -132,7 +151,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/browsers.yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/rule-sets/browsers.yaml
     path: ./rule-sets/browsers.yaml
     interval: 86400
     proxy: 🎲 Прочие
@@ -140,7 +159,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/vscode.yaml
+    url: https://raw.githubusercontent.com/awesfdawe/remnawave-misc/refs/heads/main/mihomo/rule-sets/vscode.yaml
     path: ./rule-sets/vscode.yaml
     interval: 86400
     proxy: 🎲 Прочие
