@@ -29,12 +29,7 @@ jobs:
           sudo mv mihomo-bin /usr/local/bin/mihomo
           
           go install github.com/v2fly/domain-list-community@latest
-          
-          cd .github/scripts
-          go mod init build_geoip
-          go get github.com/golang/protobuf/proto
-          go get github.com/v2fly/v2ray-core/v5/app/router/routercommon
-          go mod tidy
+          go install github.com/v2fly/geoip@latest
 
       - name: Build Mihomo Rulesets
         run: |
@@ -104,13 +99,40 @@ jobs:
               echo "" >> "$temp_list"
             fi
             
+            # Clean: remove carriage returns, empty lines, sort unique
             clean_list=$(mktemp)
             cat "$temp_list" | tr -d '\r' | awk 'NF' | sort -u > "$clean_list"
+            mv "$clean_list" "$temp_list"
             
-            cd .github/scripts
-            go run build_xray_geoip.go -i "$clean_list" -o "../../output_mrs/geoip.dat"
+            # Generate config.json for v2fly/geoip tool
+            cat > geoip_config.json <<EOF2
+          {
+            "input": [
+              {
+                "type": "text",
+                "action": "add",
+                "args": {
+                  "name": "custom",
+                  "uri": "$temp_list"
+                }
+              }
+            ],
+            "output": [
+              {
+                "type": "v2rayGeoIPDat",
+                "action": "output",
+                "args": {
+                  "outputDir": "./output_mrs",
+                  "outputName": "geoip.dat"
+                }
+              }
+            ]
+          }
+          EOF2
             
-            rm "$temp_list" "$clean_list"
+            $(go env GOPATH)/bin/geoip -c geoip_config.json
+            
+            rm "$temp_list" geoip_config.json
           fi
 
       - name: Build Xray GeoSite
