@@ -18,7 +18,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: '1.24.x'
 
       - name: Setup tools
         run: |
@@ -133,6 +133,15 @@ jobs:
               cat "xray/geosite/addition.txt" >> "$temp_list"
               echo "" >> "$temp_list"
             fi
+            
+            # Clean up domains: remove leading '+.' and '.'
+            sed -i 's/^+\.//g' "$temp_list"
+            sed -i 's/^\.//g' "$temp_list"
+            
+            # Remove empty lines, carriage returns, sort unique
+            clean_list=$(mktemp)
+            cat "$temp_list" | tr -d '\r' | awk 'NF' | sort -u > "$clean_list"
+            mv "$clean_list" "$temp_list"
             
             $(go env GOPATH)/bin/domain-list-community --datapath=geosite_data --exportlists=custom --outputname=output_mrs/geosite.dat
             
