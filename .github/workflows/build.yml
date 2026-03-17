@@ -104,35 +104,16 @@ jobs:
             cat "$temp_list" | tr -d '\r' | awk 'NF' | sort -u > "$clean_list"
             mv "$clean_list" "$temp_list"
             
+            echo "Cleaned IP list (first 5 lines):"
+            head -n 5 "$temp_list"
+            echo "Total lines: $(wc -l < "$temp_list")"
+            
             # Generate config.json for v2fly/geoip tool
-            cat > geoip_config.json <<EOF2
-          {
-            "input": [
-              {
-                "type": "text",
-                "action": "add",
-                "args": {
-                  "name": "custom",
-                  "uri": "$temp_list"
-                }
-              }
-            ],
-            "output": [
-              {
-                "type": "v2rayGeoIPDat",
-                "action": "output",
-                "args": {
-                  "outputDir": "./output_mrs",
-                  "outputName": "geoip.dat"
-                }
-              }
-            ]
-          }
-          EOF2
+            printf '{"input":[{"type":"text","action":"add","args":{"name":"custom","uri":"%s"}}],"output":[{"type":"v2rayGeoIPDat","action":"output","args":{"outputDir":"./output_mrs","outputName":"geoip.dat"}}]}' "$temp_list" > geoip_config.json
             
             $(go env GOPATH)/bin/geoip -c geoip_config.json
             
-            rm "$temp_list" geoip_config.json
+            rm -f "$temp_list" geoip_config.json
           fi
 
       - name: Build Xray GeoSite
