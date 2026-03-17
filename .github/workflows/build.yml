@@ -1,4 +1,4 @@
-name: Build Mihomo Rulesets
+name: Build
 
 on:
   schedule:

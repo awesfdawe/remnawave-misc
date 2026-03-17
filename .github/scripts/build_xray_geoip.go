@@ -27,7 +27,7 @@ func main() {
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		
+
 		// Remove YAML list prefix if present
 		line = strings.TrimPrefix(line, "- ")
 		line = strings.TrimSpace(line)
@@ -41,6 +41,9 @@ func main() {
 			line = strings.TrimSpace(line[:idx])
 		}
 
+		// Remove single quotes if wrapped
+		line = strings.Trim(line, "'\"")
+
 		// If it's just an IP without CIDR notation, append /32 or /128
 		if !strings.Contains(line, "/") {
 			if strings.Contains(line, ":") {
@@ -50,15 +53,24 @@ func main() {
 			}
 		}
 
-		ip, ipnet, err := net.ParseCIDR(line)
+		_, ipnet, err := net.ParseCIDR(line)
 		if err != nil {
-			log.Printf("Warning: failed to parse %s: %v", line, err)
+			log.Printf("Warning: skipping invalid entry: %s (%v)", line, err)
 			continue
 		}
 
+		// Use the network IP from ipnet, and convert to proper byte length
+		// V2Ray expects 4-byte IPs for IPv4 and 16-byte IPs for IPv6
+		ip := ipnet.IP
+		if v4 := ip.To4(); v4 != nil {
+			ip = v4
+		}
+
+		ones, _ := ipnet.Mask.Size()
+
 		cidrs = append(cidrs, &routercommon.CIDR{
 			Ip:     ip,
-			Prefix: uint32(ones(ipnet.Mask)),
+			Prefix: uint32(ones),
 		})
 	}
 
@@ -85,16 +97,4 @@ func main() {
 	}
 
 	log.Printf("Successfully compiled %d IPs/CIDRs to %s", len(cidrs), *outputFile)
-}
-
-func ones(mask net.IPMask) int {
-	var count int
-	for _, b := range mask {
-		for i := 0; i < 8; i++ {
-			if b&(1<<uint(7-i)) != 0 {
-				count++
-			}
-		}
-	}
-	return count
 }
