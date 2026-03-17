@@ -27,8 +27,18 @@ func main() {
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		if line == "" || strings.HasPrefix(line, "#") {
+		
+		// Remove YAML list prefix if present
+		line = strings.TrimPrefix(line, "- ")
+		line = strings.TrimSpace(line)
+
+		if line == "" || strings.HasPrefix(line, "#") || line == "payload:" {
 			continue
+		}
+
+		// Strip inline comments if any
+		if idx := strings.Index(line, "#"); idx != -1 {
+			line = strings.TrimSpace(line[:idx])
 		}
 
 		// If it's just an IP without CIDR notation, append /32 or /128
