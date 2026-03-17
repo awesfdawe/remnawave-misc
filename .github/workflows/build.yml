@@ -48,7 +48,7 @@ jobs:
               
               # Download lists
               if [ -f "${dir}lists-to-download.txt" ]; then
-                while IFS= read -r url; do
+                while IFS= read -r url || [[ -n "$url" ]]; do
                   # Skip empty lines
                   if [[ -z "$url" ]]; then
                     continue
@@ -86,7 +86,7 @@ jobs:
             temp_list=$(mktemp)
             
             if [ -f "xray/geoip/lists-to-download.txt" ]; then
-              while IFS= read -r url; do
+              while IFS= read -r url || [[ -n "$url" ]]; do
                 if [[ -z "$url" ]]; then continue; fi
                 echo "Downloading $url"
                 curl -sSL "$url" >> "$temp_list"
@@ -125,7 +125,7 @@ jobs:
             touch "$temp_list"
             
             if [ -f "xray/geosite/lists-to-download.txt" ]; then
-              while IFS= read -r url; do
+              while IFS= read -r url || [[ -n "$url" ]]; do
                 if [[ -z "$url" ]]; then continue; fi
                 echo "Downloading $url"
                 curl -sSL "$url" >> "$temp_list"
