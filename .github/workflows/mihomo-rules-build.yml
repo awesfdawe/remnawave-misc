@@ -1,8 +1,6 @@
 name: Build Mihomo Rulesets
 
 on:
-  schedule:
-    - cron: '0 3 * * 0' # 03:00 UTC on Sundays
   workflow_dispatch: # Allows manual trigger
 
 jobs:
