@@ -1,1 +1,0 @@
-https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/asn/AS22697.list
