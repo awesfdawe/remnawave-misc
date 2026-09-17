@@ -1,13 +1,13 @@
 name: Build Mihomo Rulesets
 
 on:
-  workflow_dispatch: # Allows manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Needed to push to the release branch
+      contents: write
 
     steps:
       - name: Checkout repository

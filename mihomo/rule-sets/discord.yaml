@@ -1,31 +1,12 @@
 payload:
-  # ==========================================
-  # Discord
-  # ==========================================
-  - PROCESS-NAME,Discord.exe                   # Windows
-  - PROCESS-NAME,discord                       # Linux
-
-  # ==========================================
-  # Vesktop
-  # ==========================================
-  - PROCESS-NAME,vesktop.exe                   # Windows
-  - PROCESS-NAME,vesktop                       # Linux
-  - PROCESS-NAME,vesktop-bin                   # Linux (alt)
-
-  # ==========================================
-  # Legcord
-  # ==========================================
-  - PROCESS-NAME,Legcord.exe                   # Windows
-  - PROCESS-NAME,legcord                       # Linux
-
-  # ==========================================
-  # WebCord
-  # ==========================================
-  - PROCESS-NAME,WebCord.exe                   # Windows
-  - PROCESS-NAME,webcord                       # Linux
-
-  # ==========================================
-  # Equicord
-  # ==========================================
-  - PROCESS-NAME,Equicord.exe                  # Windows
-  - PROCESS-NAME,equicord                      # Linux
+  - PROCESS-NAME,Discord.exe
+  - PROCESS-NAME,discord
+  - PROCESS-NAME,vesktop.exe
+  - PROCESS-NAME,vesktop
+  - PROCESS-NAME,vesktop-bin
+  - PROCESS-NAME,Legcord.exe
+  - PROCESS-NAME,legcord
+  - PROCESS-NAME,WebCord.exe
+  - PROCESS-NAME,webcord
+  - PROCESS-NAME,Equicord.exe
+  - PROCESS-NAME,equicord
